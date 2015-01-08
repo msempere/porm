@@ -13,19 +13,21 @@ python setup.py install
 ## Usage example
 
 ```python
-from porm import model, validators, fields
+from porm.model import Model
+from porm.validators import StringValidator, RegexValidator
+from porm.fields import StringField
 
 class User(Model):
-    name = fields.StringField(default='', 
-                                index=True,
-                                validators= [
-                                                validators.StringValidator(min_length=0, max_length=20),
-                                                validators.RegexValidator('^P')
-                                            ])
+    name = StringField(default='', 
+                        index=True,
+                        validators= [
+                                        StringValidator(min_length=0, max_length=20),
+                                        RegexValidator('^P')
+                                    ])
                                 
-    surname = fields.StringField(validators=[
-                                                validators.StringValidator(min_length=0, max_length=20),
-                                            ])
+    surname = StringField(validators=[
+                                        StringValidator(min_length=0, max_length=20),
+                                    ])
 
 user = User()
 user.name = "Peter"
