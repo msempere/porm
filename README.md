@@ -32,7 +32,7 @@ class User(Model):
 user = User()
 user.name = "Peter"
 user.surname = "Pan"
-user.save()
+user.save() # returns True
 
 user.free() # returns True
 user.exist() # return False
