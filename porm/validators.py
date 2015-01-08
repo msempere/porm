@@ -1,3 +1,4 @@
+import re
 
 class Validator(object):
     def __init__(self):
@@ -25,3 +26,27 @@ class StringValidator(object):
             return False
         else:
             return True
+
+
+class RegexValidator(object):
+    def __init__(self, regex, flags=0):
+        self.regex = regex
+        self.flags = flags
+
+    @property
+    def value(self):
+        return self._value
+
+    @value.setter
+    def value(self, value):
+        self._value = value
+
+
+    def validate(self):
+        if isinstance(self.regex, basestring) and self.value:
+            regex = re.compile(self.regex, self.flags)
+            match = regex.match(self.value or '')
+
+            if match:
+                return True
+        return False

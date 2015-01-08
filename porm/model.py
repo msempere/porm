@@ -17,11 +17,10 @@ class Model(object):
 
             for v in getattr(self, name).validators:
                 v.value = value
-                if v.validate():
-                    self.__dict__[name] = getattr(self, name)
-                    getattr(self, name).value = value
-                else:
+                if not v.validate():
                     raise ValidatorException("%s could not validate '%s'"%(v.__class__.__name__, value))
+            self.__dict__[name] = getattr(self, name)
+            getattr(self, name).value = value
         else:
             raise ModelException("'%s' is not a field member of '%s'"%(name, self.__class__.__name__))
 
