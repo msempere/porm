@@ -1,6 +1,9 @@
-# PORM [![Build Status](https://travis-ci.org/msempere/porm.svg?branch=master)] (http://travis-ci.org/msempere/porm)
+![Logo](http://i.imgur.com/xOJFRp4.png)
 
 Python Redis ORM
+
+## Versions:
+* master [![Build Status](https://travis-ci.org/msempere/porm.svg?branch=master)](https://travis-ci.org/msempere/porm)
 
 ## Setup:
 ```
