@@ -38,7 +38,11 @@ class Model(object):
                         self.__dict__['index'] = '%s:%s' % (self.__class__.__name__, str(obj.value))
                     else:
                         args[element] = obj.value
-            self.connection.hmset(self.index, args)
+            try:
+                self.connection.hmset(self.index, args)
+                return True
+            except:
+                return False
 
     def free(self):
         if self.index:
