@@ -18,11 +18,14 @@ from porm import model, validators, fields
 class User(Model):
     name = fields.StringField(default='', 
                                 index=True,
-                                validators= [validators.StringValidator(min_length=0,
-                                                                        max_length=20)])
+                                validators= [
+                                                validators.StringValidator(min_length=0, max_length=20),
+                                                validators.RegexValidator('^P')
+                                            ])
                                 
-    surname = fields.StringField(validators=[validators.StringValidator(min_length=0, 
-                                                                        max_length=20)])
+    surname = fields.StringField(validators=[
+                                                validators.StringValidator(min_length=0, max_length=20),
+                                            ])
 
 user = User()
 user.name = "Peter"
