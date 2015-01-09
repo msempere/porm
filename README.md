@@ -15,25 +15,28 @@ python setup.py install
 
 ```python
 from porm.model import Model
-from porm.validators import StringValidator, RegexValidator, EmailValidator
+from porm.validators import StringValidator, RegexValidator, EmailValidator, NumberValidator, LenghValidator
 from porm.fields import StringField
 
 class User(Model):
     name = StringField(index=True, validators= [
-                                                StringValidator(min_length=0, max_length=20),
+                                                StringValidator(),
+                                                LenghValidator(min_length=0, max_length=20)
                                                 RegexValidator('^P')
                                                 ])
                                 
     surname = StringField(validators=[
-                                        StringValidator(min_length=0, max_length=20),
+                                        StringValidator(),
+                                        LenghValidator(min_length=0, max_length=20)
                                     ])
                                     
     age = NumberField(validators=[
-                                     RangeValidator(min=0, max=120),
+                                     RangeValidator(min=0, max=120)
                                 ])
     
     email = StringField(validators=[
-                                        EmailValidator(),
+                                        NumberValidator(),
+                                        EmailValidator()
                                     ])
 
 user = User()
@@ -46,3 +49,13 @@ user.save() # returns True
 user.free() # returns True
 user.exist() # return False
 ```
+
+## Validators
+
+ * StringValidator (str)
+ * NumberValidator (int, float)
+ * EmailValidator (str)
+ * RegexValidator (str)
+ * EqualToValidator (str, int, float)
+ * NumberRangeValidator (int, float)
+ * LenghValidator (str)
