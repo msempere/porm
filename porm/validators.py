@@ -74,3 +74,47 @@ class EmailValidator(RegexValidator):
     def __init__(self):
         super(EmailValidator, self).__init__(r'^.+@([^.@][^@]+)$', re.IGNORECASE)
 
+
+class IPAddressValidator(Validator):
+    def __init__(self, ipv4=True):
+        self.ipv4 = ipv4
+        self.ipv6 = not self.ipv4
+
+    def validate(self):
+        return (self.ipv4 and self.check_ipv4(self.value)) or (self.ipv6 and self.check_ipv6(self.value))
+
+
+    @classmethod
+    def check_ipv4(cls, value):
+        parts = value.split('.')
+        if len(parts) == 4 and all(x.isdigit() for x in parts):
+            numbers = list(int(x) for x in parts)
+            return all(num >= 0 and num < 256 for num in numbers)
+        return False
+
+    @classmethod
+    def check_ipv6(cls, value):
+        parts = value.split(':')
+        if len(parts) > 8:
+            return False
+
+        num_blank = 0
+        for part in parts:
+            if not part:
+                num_blank += 1
+            else:
+                try:
+                    value = int(part, 16)
+                except ValueError:
+                    return False
+                else:
+                    if value < 0 or value >= 65536:
+                        return False
+
+        if num_blank < 2:
+            return True
+        elif num_blank == 2 and not parts[0] and not parts[1]:
+            return True
+        return False
+
+

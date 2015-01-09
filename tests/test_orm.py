@@ -1,6 +1,6 @@
 import redis
 from porm.model import Model
-from porm.validators import StringValidator, LengthValidator, RegexValidator, ValidatorException, EmailValidator, EqualToValidator, NumberRangeValidator
+from porm.validators import StringValidator, LengthValidator, RegexValidator, ValidatorException, EmailValidator, EqualToValidator, NumberRangeValidator, IPAddressValidator
 from porm.fields import StringField, NumberField
 from unittest import TestCase
 import pytest
@@ -162,6 +162,21 @@ class TestCache(TestCase):
         user.free()
         assert user.exists() == False
 
+    def test_ip_validation(self):
+        class User(Model):
+            name = StringField(
+                               index=True,
+                               validators= [
+                                            LengthValidator(min_length=0, max_length=20),
+                                            EqualToValidator('Peter2')
+                                            ])
+            ip = StringField(validators =[
+                                            StringValidator(),
+                                            IPAddressValidator()
+                                        ])
 
-
-
+        user = User()
+        user.name = 'Peter2'
+        user.ip = '127.0.0.1'
+        with pytest.raises(ValidatorException):
+            user.ip = '1234.456.12.12'
