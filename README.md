@@ -40,7 +40,7 @@ class User(Model):
                                     ])
     
     ip = StringField(validators=[
-                                    IPAddressValidatorr(ipv4=True)
+                                    IPAddressValidator(ipv4=True)
                                     ])
 
 user = User()
