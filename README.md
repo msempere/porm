@@ -38,12 +38,17 @@ class User(Model):
                                         NumberValidator(),
                                         EmailValidator()
                                     ])
+    
+    ip = StringField(validators=[
+                                    IPAddressValidatorr(ipv4=True)
+                                    ])
 
 user = User()
 user.name = 'Peter'
 user.surname = 'Pan'
 user.age = 15
 user.email = 'peter@pan.com'
+user.ip = '127.0.0.1'
 
 user.save() # returns True
 user.free() # returns True
@@ -59,3 +64,4 @@ user.exist() # return False
  * EqualToValidator (str, int, float)
  * NumberRangeValidator (int, float)
  * LenghValidator (str)
+ * IPAddressValidator (str) (Support for ipv4 and ipv6)
