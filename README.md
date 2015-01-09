@@ -1,6 +1,7 @@
-# PORM [![Build Status](https://travis-ci.org/msempere/porm.svg?branch=master)] (http://travis-ci.org/msempere/porm)
+![Logo](http://i.imgur.com/xOJFRp4.png)
 
-Python Redis ORM
+Python Redis ORM [![Build Status](https://travis-ci.org/msempere/porm.svg?branch=master)](https://travis-ci.org/msempere/porm) [![Requirements Status](https://requires.io/github/msempere/porm/requirements.svg?branch=master)](https://requires.io/github/msempere/porm/requirements/?branch=master)
+
 
 ## Setup:
 ```
@@ -32,7 +33,7 @@ class User(Model):
 user = User()
 user.name = "Peter"
 user.surname = "Pan"
-user.save()
+user.save() # returns True
 
 user.free() # returns True
 user.exist() # return False
