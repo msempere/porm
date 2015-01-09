@@ -18,6 +18,10 @@ class StringValidator(Validator):
     def validate(self):
         return True if type(self.value) == str else False
 
+class NumberValidator(Validator):
+    def validate(self):
+        return True if (type(self.value) == int or type(self.value) == float) else False
+
 
 class LengthValidator(Validator):
     def __init__(self, min_length, max_length):
