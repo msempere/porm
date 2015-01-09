@@ -15,26 +15,29 @@ python setup.py install
 
 ```python
 from porm.model import Model
-from porm.validators import StringValidator, RegexValidator
+from porm.validators import StringValidator, RegexValidator, EmailValidator
 from porm.fields import StringField
 
 class User(Model):
-    name = StringField(default='', 
-                        index=True,
-                        validators= [
-                                        StringValidator(min_length=0, max_length=20),
-                                        RegexValidator('^P')
-                                    ])
+    name = StringField(index=True, validators= [
+                                                StringValidator(min_length=0, max_length=20),
+                                                RegexValidator('^P')
+                                                ])
                                 
     surname = StringField(validators=[
                                         StringValidator(min_length=0, max_length=20),
                                     ])
+    
+    email = StringField(validators=[
+                                        EmailValidator(),
+                                    ])
 
 user = User()
-user.name = "Peter"
-user.surname = "Pan"
-user.save() # returns True
+user.name = 'Peter'
+user.surname = 'Pan'
+user.email = 'peter@pan.com'
 
+user.save() # returns True
 user.free() # returns True
 user.exist() # return False
 ```
