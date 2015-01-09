@@ -27,6 +27,7 @@ class User(Model):
     surname = StringField(validators=[
                                         StringValidator(min_length=0, max_length=20),
                                     ])
+                                    
     age = NumberField(validators=[
                                      RangeValidator(min=0, max=120),
                                 ])
