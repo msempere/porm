@@ -27,6 +27,9 @@ class User(Model):
     surname = StringField(validators=[
                                         StringValidator(min_length=0, max_length=20),
                                     ])
+    age = NumberField(validators=[
+                                     RangeValidator(min=0, max=120),
+                                ])
     
     email = StringField(validators=[
                                         EmailValidator(),
@@ -35,6 +38,7 @@ class User(Model):
 user = User()
 user.name = 'Peter'
 user.surname = 'Pan'
+user.age = 15
 user.email = 'peter@pan.com'
 
 user.save() # returns True
