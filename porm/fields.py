@@ -7,7 +7,7 @@ class Field(object):
         self.value = None
 
     def __str__(self):
-        return self()
+        return str(self.value)
 
     def __call__(self):
         return self.value

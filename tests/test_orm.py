@@ -99,22 +99,6 @@ class TestCache(TestCase):
         with pytest.raises(ValidatorException):
             user.name = 'Peter3'
 
-    def test_multiple_index(self):
-        class User(Model):
-            name = StringField(index=True)
-            surname = StringField(index=True)
-            age = NumberField()
-
-        user = User()
-        user.name = 'Peter2'
-        user.surname = 'Pan2'
-        user.age = 15
-        user.save()
-
-        assert user.exists() == True
-        connection = redis.StrictRedis(host='127.0.0.1', port=6379, db=0)
-        assert connection.hget('User:Peter2:Pan2', 'age') == str(15)
-
     def test_prefix(self):
         class User(Model):
             name = StringField(index=True)
@@ -180,3 +164,24 @@ class TestCache(TestCase):
         user.ip = '127.0.0.1'
         with pytest.raises(ValidatorException):
             user.ip = '1234.456.12.12'
+
+    def test_finding(self):
+        class User(Model):
+            name = StringField(index=True)
+            surname = StringField()
+
+        user = User()
+        user.name = 'Peter7'
+        user.surname = 'Pan'
+        user.save()
+
+        found_user = User.find('Peter7')
+        assert found_user.surname.get() == 'Pan'
+
+    def test_non_finding(self):
+        class User(Model):
+            name = StringField(index=True)
+            surname = StringField()
+
+        found_user = User.find('NonExist')
+        assert found_user.surname.get() == found_user.name.get() == None
