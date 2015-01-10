@@ -55,6 +55,23 @@ user.free() # returns True
 user.exist() # return False
 ```
 
+## Saving data
+```python
+>>> user = User()
+>>> user.name = 'Peter'
+>>> user.email = 'peter@pan.com
+>>> user.save()
+True
+```
+
+## Retrieving data
+
+```python
+>>> found_user = User.find('Peter')
+>>> found_user.email
+'peter@pan.com'
+```
+
 ## Validators
 
  * StringValidator (str)
