@@ -40,7 +40,7 @@ class User(Model):
                                     ])
     
     ip = StringField(validators=[
-                                    IPAddressValidatorr(ipv4=True)
+                                    IPAddressValidator(ipv4=True)
                                     ])
 
 user = User()
@@ -53,6 +53,23 @@ user.ip = '127.0.0.1'
 user.save() # returns True
 user.free() # returns True
 user.exist() # return False
+```
+
+## Saving data
+```python
+>>> user = User()
+>>> user.name = 'Peter'
+>>> user.email = 'peter@pan.com
+>>> user.save()
+True
+```
+
+## Retrieving data
+
+```python
+>>> found_user = User.find('Peter')
+>>> found_user.email
+'peter@pan.com'
 ```
 
 ## Validators
