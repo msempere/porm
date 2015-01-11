@@ -7,7 +7,7 @@ class Field(object):
         self.value = None
 
     def __str__(self):
-        return str(self.value)
+        return self.value
 
     def __call__(self):
         return self.value
@@ -19,4 +19,11 @@ class StringField(Field):
     pass
 
 class NumberField(Field):
-    pass
+    def __str__(self):
+        return int(self.value)
+
+    def __call__(self):
+        return int(self.value)
+
+    def get(self):
+        return self.__call__()

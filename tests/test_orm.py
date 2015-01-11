@@ -178,6 +178,21 @@ class TestCache(TestCase):
         found_user = User.find('Peter7')
         assert found_user.surname.get() == 'Pan'
 
+    def test_finding_with_numeric_parameter(self):
+        class User(Model):
+            name = StringField(index=True)
+            surname = StringField()
+            age = NumberField()
+
+        user = User()
+        user.name = 'Peter8'
+        user.surname = 'Pan'
+        user.age = 15
+        user.save()
+
+        found_user = User.find('Peter8')
+        assert found_user.age.get() == 15
+
     def test_non_finding(self):
         class User(Model):
             name = StringField(index=True)
