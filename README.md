@@ -19,24 +19,25 @@ from porm.validators import StringValidator, RegexValidator, EmailValidator, Num
 from porm.fields import StringField
 
 class User(Model):
-    name = StringField(index=True, validators= [
-                                                StringValidator(),
-                                                LenghValidator(min_length=0, max_length=20)
-                                                RegexValidator('^P')
-                                                ])
+    name = StringField(index=True, 
+                        validators= [
+                                    StringValidator(),
+                                    LenghValidator(min_length=0, max_length=20)
+                                    RegexValidator('^P')
+                                    ])
                                 
     surname = StringField(validators=[
-                                        StringValidator(),
-                                        LenghValidator(min_length=0, max_length=20)
+                                    StringValidator(),
+                                    LenghValidator(min_length=0, max_length=20)
                                     ])
                                     
     age = NumberField(validators=[
-                                     RangeValidator(min=0, max=120)
-                                ])
+                                    RangeValidator(min=0, max=120)
+                                    ])
     
     email = StringField(validators=[
-                                        NumberValidator(),
-                                        EmailValidator()
+                                    NumberValidator(),
+                                    EmailValidator()
                                     ])
     
     ip = StringField(validators=[
