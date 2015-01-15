@@ -15,20 +15,20 @@ python setup.py install
 
 ```python
 from porm.model import Model
-from porm.validators import StringValidator, RegexValidator, EmailValidator, NumberValidator, LenghValidator
+from porm.validators import StringValidator, RegexValidator, EmailValidator, NumberValidator, LengthValidator
 from porm.fields import StringField
 
 class User(Model):
     name = StringField(index=True, 
                         validators= [
                                     StringValidator(),
-                                    LenghValidator(min_length=0, max_length=20)
+                                    LengthValidator(min_length=0, max_length=20)
                                     RegexValidator('^P')
                                     ])
                                 
     surname = StringField(validators=[
                                     StringValidator(),
-                                    LenghValidator(min_length=0, max_length=20)
+                                    LengthValidator(min_length=0, max_length=20)
                                     ])
                                     
     age = NumberField(validators=[
@@ -86,3 +86,17 @@ True
  * NumberRangeValidator (int, float)
  * LenghValidator (str)
  * IPAddressValidator (str) (Support for ipv4 and ipv6)
+ 
+### Validation:
+
+```python
+class User(Model):
+    name = StringField(index=True, 
+                        validators= [
+                                    LengthValidator(min_length=0, max_length=20)
+                                    ])
+
+user = User()
+user.name = 'string_with_more_than_20_characters'
+# porm.validators.ValidatorException: LengthValidator could not validate 'string_with_more_than_20_characters'
+```
