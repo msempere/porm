@@ -1,5 +1,5 @@
 import redis
-from porm.model import Model
+from porm.model import Model, ModelException
 from porm.validators import StringValidator, LengthValidator, RegexValidator, ValidatorException, EmailValidator, EqualToValidator, NumberRangeValidator, IPAddressValidator
 from porm.fields import StringField, NumberField
 from unittest import TestCase
@@ -220,3 +220,12 @@ class TestORM(TestCase):
         out = reportSIO.getvalue()
         sys.stdout = stdout
         assert out == "{'age': 15, 'surname': 'Pan', 'name': 'Peter'}\n"
+
+    def test_extra_data_from_db(self):
+        class User(Model):
+            name = StringField(index=True)
+            surname = StringField()
+            typo_in_age = NumberField()
+
+        with pytest.raises(ModelException):
+            User.find('Peter')
