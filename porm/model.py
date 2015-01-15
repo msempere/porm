@@ -104,3 +104,12 @@ class Model(object):
                 return self.connection.exists(self.index) > 0
         raise ModelException("'%s' does not have a index key"%(self.__class__.__name__))
 
+    def __str__(self):
+        attrs = {}
+        for element in self.__dict__:
+            obj = getattr(self, element)
+            if isinstance(obj, Field):
+                attrs[element] = obj.get()
+        return str(attrs)
+
+
