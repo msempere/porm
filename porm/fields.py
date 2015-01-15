@@ -1,6 +1,7 @@
 
 class Field(object):
     def __init__(self, validators=[], unique=False, index=False):
+        assert type(validators) == list
         self.validators = validators
         self.unique = unique
         self.index = index
