@@ -11,7 +11,7 @@ class Model(object):
 
     def __init__(self, host='127.0.0.1', port=6379, db=0, prefix=''):
         assert type(host) == str
-        assert type(port) == str
+        assert type(port) == int
         assert type(prefix) == str
         assert type(db) == int
         self.__dict__['connection'] = self.__class__.connection = redis.StrictRedis(host=host, port=port, db=db)
