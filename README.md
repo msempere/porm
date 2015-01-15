@@ -51,6 +51,9 @@ user.age = 15
 user.email = 'peter@pan.com'
 user.ip = '127.0.0.1'
 
+print user
+# {'ip' = '127.0.0.1', 'email': 'peter@pan.com', 'age': 15, 'surname': 'Pan', 'name': 'Peter'}
+
 user.save() # returns True
 user.free() # returns True
 user.exist() # return False
