@@ -10,6 +10,10 @@ class Model(object):
     connection = redis.StrictRedis(host='127.0.0.1', port=6379, db=0)
 
     def __init__(self, host='127.0.0.1', port=6379, db=0, prefix=''):
+        assert type(host) == str
+        assert type(port) == str
+        assert type(prefix) == str
+        assert type(db) == int
         self.__dict__['connection'] = self.__class__.connection = redis.StrictRedis(host=host, port=port, db=db)
         self.__dict__['prefix'] = self.__class__.prefix = prefix
         self.__dict__['index'] = '%s:%s' % (prefix, self.__class__.__name__) if prefix else self.__class__.__name__
@@ -64,6 +68,7 @@ class Model(object):
 
     @classmethod
     def find(cls, key):
+        assert type(key) == str
         try:
             _key = '%s%s:%s' % (('%s:' % cls.prefix if cls.prefix else ''), cls.__name__, key)
         except:
@@ -81,7 +86,11 @@ class Model(object):
                     if obj.index:
                         new.__dict__[element].value = key
                     else:
-                        new.__dict__[element].value = got[element]
+                        try:
+                            new.__dict__[element].value = got[element]
+                        except KeyError:
+                            # We are using a class with more requirements than data we have stored in the db
+                            raise ModelException("Impossible to get '%s' from db. There is no info for this attribute in Redis" % (element))
         return new
 
 
