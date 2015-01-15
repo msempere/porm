@@ -3,9 +3,11 @@ from porm.model import Model
 from porm.validators import StringValidator, LengthValidator, RegexValidator, ValidatorException, EmailValidator, EqualToValidator, NumberRangeValidator, IPAddressValidator
 from porm.fields import StringField, NumberField
 from unittest import TestCase
+from StringIO import StringIO
+import sys
 import pytest
 
-class TestCache(TestCase):
+class TestORM(TestCase):
 
     def test_basic_saving(self):
         class User(Model):
@@ -200,3 +202,21 @@ class TestCache(TestCase):
 
         found_user = User.find('NonExist')
         assert found_user.surname.get() == found_user.name.get() == None
+
+    def test_str_output(self):
+        class User(Model):
+            name = StringField(index=True)
+            surname = StringField()
+            age = NumberField()
+
+        user = User()
+        user.name = 'Peter'
+        user.surname = 'Pan'
+        user.age = 15
+        stdout = sys.stdout
+        sys.stdout = reportSIO = StringIO()
+
+        print user
+        out = reportSIO.getvalue()
+        sys.stdout = stdout
+        assert out == "{'age': 15, 'surname': 'Pan', 'name': 'Peter'}\n"
