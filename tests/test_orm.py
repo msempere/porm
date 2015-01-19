@@ -229,3 +229,33 @@ class TestORM(TestCase):
 
         with pytest.raises(ModelException):
             User.find('Peter')
+
+    def test_default_value(self):
+        class User(Model):
+            name = StringField(index=True)
+            surname = StringField()
+            age = NumberField()
+            address = StringField(default='default value')
+
+        user = User()
+        user.name = 'Peter'
+        user.surname = 'Pan'
+        user.age = 15
+
+        assert user.address.get() == 'default value'
+
+    def test_default_value_from_db(self):
+        class User(Model):
+            name = StringField(index=True)
+            surname = StringField()
+            age = NumberField()
+            address = StringField(default='default value')
+
+        user = User()
+        user.name = 'Peter9'
+        user.surname = 'Pan'
+        user.age = 15
+        user.save()
+        assert user.address.get() == 'default value'
+        found_user = User.find('Peter9')
+        assert found_user.address.get() == 'default value' == user.address.get()

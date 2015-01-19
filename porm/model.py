@@ -43,8 +43,21 @@ class Model(object):
                     index = getattr(self, 'index')
                     self.__dict__['index'] = '%s:%s' % (index, str(value))
                     self.__dict__['has_index'] = True
+                    self.__update_defaults()
         else:
             raise ModelException("'%s' is not a field member of '%s'"%(name, self.__class__.__name__))
+
+
+    def __update_defaults(self):
+        for element in self.__class__.__dict__:
+            obj = getattr(self.__class__, element)
+            if isinstance(obj, Field):
+                if obj.default:
+                    if obj.index:
+                        raise ModelException("'%s' is an index, so it can't contain a default value " % (element))
+                    else:
+                        self.__dict__[element] = copy.deepcopy(self.__class__.__dict__[element])
+                        self.__dict__[element].value = obj.default
 
 
     # saves the model filled
