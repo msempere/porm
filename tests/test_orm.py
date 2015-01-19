@@ -1,7 +1,7 @@
 import redis
 from porm.model import Model, ModelException
 from porm.validators import StringValidator, LengthValidator, RegexValidator, ValidatorException, EmailValidator, EqualToValidator, NumberRangeValidator, IPAddressValidator
-from porm.fields import StringField, NumberField
+from porm.fields import StringField, NumberField, FieldException
 from unittest import TestCase
 from StringIO import StringIO
 import sys
@@ -261,9 +261,8 @@ class TestORM(TestCase):
         assert found_user.address.get() == 'default value' == user.address.get()
 
     def test_default_value_in_index(self):
-        class User(Model):
-            name = StringField(index=True, default='a default value')
-
-        with pytest.raises(ModelException):
+        with pytest.raises(FieldException):
+            class User(Model):
+                name = StringField(index=True, default='a default value')
             user = User()
             user.name = 'Peter'
