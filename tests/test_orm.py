@@ -259,3 +259,11 @@ class TestORM(TestCase):
         assert user.address.get() == 'default value'
         found_user = User.find('Peter9')
         assert found_user.address.get() == 'default value' == user.address.get()
+
+    def test_default_value_in_index(self):
+        class User(Model):
+            name = StringField(index=True, default='a default value')
+
+        with pytest.raises(ModelException):
+            user = User()
+            user.name = 'Peter'
