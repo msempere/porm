@@ -1,11 +1,12 @@
 
 class Field(object):
-    def __init__(self, validators=[], unique=False, index=False):
+    def __init__(self, validators=[], unique=False, index=False, default=None):
         assert type(validators) == list
         self.validators = validators
         self.unique = unique
         self.index = index
         self.value = None
+        self.default = default
 
     def __str__(self):
         return self.value
