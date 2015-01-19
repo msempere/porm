@@ -75,8 +75,22 @@ True
 
 ```python
 >>> found_user = User.find('Peter')
->>> found_user.email
+>>> found_user.email.get()
 'peter@pan.com'
+```
+
+## Default values 
+A default value can be set if no value is supplied
+
+```python
+>>> class User(Model):
+>>>     name = StringField(index=True)
+>>>     surname = StringField(default='Pan')
+
+>>> user = User()
+>>> user.name = 'Peter'
+>>> user.surname.get()
+'Pan'
 ```
 
 ## Validators
