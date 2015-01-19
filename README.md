@@ -14,49 +14,52 @@ python setup.py install
 ## Usage example
 
 ```python
-from porm.model import Model
-from porm.validators import StringValidator, RegexValidator, EmailValidator, NumberValidator, LengthValidator
-from porm.fields import StringField
+>>> from porm.model import Model
+>>> from porm.validators import StringValidator, RegexValidator, EmailValidator, NumberValidator, LengthValidator
+>>> from porm.fields import StringField
 
-class User(Model):
-    name = StringField(index=True, 
-                        validators= [
-                                    StringValidator(),
-                                    LengthValidator(min_length=0, max_length=20)
-                                    RegexValidator('^P')
-                                    ])
+>>> class User(Model):
+>>>     name = StringField(index=True, 
+>>>                         validators= [
+>>>                                     StringValidator(),
+>>>                                     LengthValidator(min_length=0, max_length=20)
+>>>                                     RegexValidator('^P')
+>>>                                    ])
                                 
-    surname = StringField(validators=[
-                                    StringValidator(),
-                                    LengthValidator(min_length=0, max_length=20)
-                                    ])
+>>>     surname = StringField(validators=[
+>>>                                     StringValidator(),
+>>>                                     LengthValidator(min_length=0, max_length=20)
+>>>                                     ])
                                     
-    age = NumberField(validators=[
-                                    RangeValidator(min=0, max=120)
-                                    ])
+>>>     age = NumberField(validators=[
+>>>                                     RangeValidator(min=0, max=120)
+>>>                                     ])
     
-    email = StringField(validators=[
-                                    NumberValidator(),
-                                    EmailValidator()
-                                    ])
+>>>     email = StringField(validators=[
+>>>                                     NumberValidator(),
+>>>                                     EmailValidator()
+>>>                                     ])
     
-    ip = StringField(validators=[
-                                    IPAddressValidator(ipv4=True)
-                                    ])
+>>>     ip = StringField(validators=[
+>>>                                     IPAddressValidator(ipv4=True)
+>>>                                     ])
 
-user = User()
-user.name = 'Peter'
-user.surname = 'Pan'
-user.age = 15
-user.email = 'peter@pan.com'
-user.ip = '127.0.0.1'
+>>> user = User()
+>>> user.name = 'Peter'
+>>> user.surname = 'Pan'
+>>> user.age = 15
+>>> user.email = 'peter@pan.com'
+>>> user.ip = '127.0.0.1'
 
-print user
-# {'ip' = '127.0.0.1', 'email': 'peter@pan.com', 'age': 15, 'surname': 'Pan', 'name': 'Peter'}
+>>> print user
+{'ip' = '127.0.0.1', 'email': 'peter@pan.com', 'age': 15, 'surname': 'Pan', 'name': 'Peter'}
 
-user.save() # returns True
-user.free() # returns True
-user.exist() # return False
+>>> user.save()
+True
+>>> user.free()
+True
+>>> user.exist()
+False
 ```
 
 ## Saving data
@@ -90,13 +93,13 @@ True
 ### Validation:
 
 ```python
-class User(Model):
-    name = StringField(index=True, 
-                        validators= [
-                                    LengthValidator(min_length=0, max_length=20)
-                                    ])
+>>> class User(Model):
+>>>     name = StringField(index=True, 
+>>>                         validators= [
+>>>                                     LengthValidator(min_length=0, max_length=20)
+>>>                                     ])
 
-user = User()
-user.name = 'string_with_more_than_20_characters'
-# porm.validators.ValidatorException: LengthValidator could not validate 'string_with_more_than_20_characters'
+>>> user = User()
+>>> user.name = 'string_with_more_than_20_characters'
+porm.validators.ValidatorException: LengthValidator could not validate 'string_with_more_than_20_characters'
 ```
